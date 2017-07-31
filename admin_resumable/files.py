@@ -19,9 +19,10 @@ class ResumableFile(object):
     as files usually must be downloaded to server as chunks and re-uploaded as complete files.
     """
 
-    def __init__(self, field, kwargs):
+    def __init__(self, field, user, params):
         self.field = field
-        self.kwargs = kwargs
+        self.user = user
+        self.params = params
         self.chunk_suffix = "_part_"
 
     @cached_property
@@ -50,7 +51,7 @@ class ResumableFile(object):
         Checks if the requested chunk exists.
         """
         return self.chunk_storage.exists(self.current_chunk_name) and \
-               self.chunk_storage.size(self.current_chunk_name) == int(self.kwargs.get('resumableCurrentChunkSize'))
+               self.chunk_storage.size(self.current_chunk_name) == int(self.params.get('resumableCurrentChunkSize'))
 
     @property
     def chunk_names(self):
@@ -67,16 +68,18 @@ class ResumableFile(object):
 
     @property
     def current_chunk_name(self):
+        # TODO: add user identifier to chunk name
         return "%s%s%s" % (
             self.filename,
             self.chunk_suffix,
-            self.kwargs.get('resumableChunkNumber').zfill(4)
+            self.params.get('resumableChunkNumber').zfill(4)
         )
 
     def chunks(self):
         """
         Iterates over all stored chunks.
         """
+        # TODO: add user identifier to chunk name
         files = sorted(self.chunk_storage.listdir('')[1])
         for file in files:
             if fnmatch.fnmatch(file, '%s%s*' % (self.filename,
@@ -103,10 +106,11 @@ class ResumableFile(object):
         """
         Gets the filename.
         """
-        filename = self.kwargs.get('resumableFilename')
+        # TODO: add user identifier to chunk name
+        filename = self.params.get('resumableFilename')
         if '/' in filename:
             raise Exception('Invalid filename')
-        value = "%s_%s" % (self.kwargs.get('resumableTotalSize'), filename)
+        value = "%s_%s" % (self.params.get('resumableTotalSize'), filename)
         return value
 
     @property
@@ -114,7 +118,7 @@ class ResumableFile(object):
         """
         Checks if all chunks are already stored.
         """
-        return int(self.kwargs.get('resumableTotalSize')) == self.size
+        return int(self.params.get('resumableTotalSize')) == self.size
 
     def process_chunk(self, file):
         """
