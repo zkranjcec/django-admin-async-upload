@@ -50,7 +50,8 @@ class ResumableWidget(FileInput):
         }
 
         if not self.is_required:
-            template_with_clear = '<span class="clearable-file-input">%(clear)s <label for="%(clear_checkbox_id)s">%(clear_checkbox_label)s</label></span>'
+            template_with_clear = '<span class="clearable-file-input">%(clear)s ' \
+                                  '<label for="%(clear_checkbox_id)s">%(clear_checkbox_label)s</label></span>'
             substitutions = {
                 'clear_checkbox_id': attrs['id'] + "-clear-id",
                 'clear_checkbox_name': attrs['id'] + "-clear",
@@ -94,7 +95,7 @@ class FormAdminResumableFileField(FileField):
         return data
 
 
-class ModelAdminResumableFileField(models.FileField):
+class ResumableFileField(models.FileField):
 
     def formfield(self, **kwargs):
         content_type_id = ContentType.objects.get_for_model(self.model).id
@@ -105,4 +106,9 @@ class ModelAdminResumableFileField(models.FileField):
                 'field_name': self.name})
         }
         kwargs.update(defaults)
-        return super(ModelAdminResumableFileField, self).formfield(**kwargs)
+        return super(ResumableFileField, self).formfield(**kwargs)
+
+
+class ModelAdminResumableFileField(ResumableFileField):
+    # deprecated
+    pass
