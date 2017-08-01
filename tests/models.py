@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 
-from admin_resumable.fields import ModelAdminResumableFileField
+from admin_resumable.models import ModelAdminResumableFileField
 
 
 # Stolen from the README
