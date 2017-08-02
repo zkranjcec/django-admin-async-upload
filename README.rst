@@ -65,6 +65,8 @@ Versions
 
 2.0.3: Version fix
 
+2.0.4: Added validator. File reorganization.
+
 
 [1] Django silently truncates incomplete chunks, due to the way the multipart
 parser works: https://github.com/django/django/blob/master/django/http/multipartparser.py
