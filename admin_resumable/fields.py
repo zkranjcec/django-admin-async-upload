@@ -1,11 +1,11 @@
 from django.core.exceptions import ValidationError
 from django.forms import fields
 
-from admin_resumable.widgets import ResumableWidget
+from admin_resumable.widgets import ResumableAdminWidget
 
 
 class FormResumableFileField(fields.FileField):
-    widget = ResumableWidget
+    widget = ResumableAdminWidget
 
     def to_python(self, data):
         if self.required:

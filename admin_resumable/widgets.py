@@ -10,8 +10,8 @@ from django.utils.translation import ugettext_lazy
 from admin_resumable.storage import ResumableStorage
 
 
-class ResumableWidget(FileInput):
-    template_name = 'admin_resumable/file_input.html'
+class ResumableBaseWidget(FileInput):
+    template_name = 'admin_resumable/admin_file_input.html'
     clear_checkbox_label = ugettext_lazy('Clear')
 
     def render(self, name, value, attrs=None, **kwargs):
@@ -69,7 +69,13 @@ class ResumableWidget(FileInput):
             return None
         return data.get(name, None)
 
+
+class ResumableAdminWidget(ResumableBaseWidget):
     @property
     def media(self):
         js = ["resumable.js"]
         return forms.Media(js=[static("admin_resumable/js/%s" % path) for path in js])
+
+
+class ResumableWidget(ResumableBaseWidget):
+    template_name = 'admin_resumable/user_file_input.html'
