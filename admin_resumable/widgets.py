@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
 from django.db.models.fields.files import FieldFile
 from django.forms import FileInput, CheckboxInput, forms
 from django.template import loader
@@ -29,6 +30,9 @@ class ResumableWidget(FileInput):
 
         chunk_size = getattr(settings, 'ADMIN_RESUMABLE_CHUNKSIZE', "1*1024*1024")
         show_thumb = getattr(settings, 'ADMIN_RESUMABLE_SHOW_THUMB', False)
+
+        content_type_id = ContentType.objects.get_for_model(self.attrs['model']).id
+
         context = {
             'name': name,
             'value': value,
@@ -36,7 +40,7 @@ class ResumableWidget(FileInput):
             'chunk_size': chunk_size,
             'show_thumb': show_thumb,
             'field_name': self.attrs['field_name'],
-            'content_type_id': self.attrs['content_type_id'],
+            'content_type_id': content_type_id,
             'file_url': file_url,
             'file_name': file_name,
         }
@@ -65,8 +69,6 @@ class ResumableWidget(FileInput):
             return None
         return data.get(name, None)
 
-
-class AdminResumableWidget(ResumableWidget):
     @property
     def media(self):
         js = ["resumable.js"]
