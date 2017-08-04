@@ -1,4 +1,4 @@
-from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponse
 from django.utils.functional import cached_property
@@ -20,7 +20,7 @@ class UploadView(View):
 
     def post(self, request, *args, **kwargs):
         chunk = request.FILES.get('file')
-        r = ResumableFile(self.model_upload_field, request.POST)
+        r = ResumableFile(self.model_upload_field, user=request.user, params=request.POST)
         if not r.chunk_exists:
             r.process_chunk(chunk)
         if r.is_complete:
@@ -28,7 +28,7 @@ class UploadView(View):
         return HttpResponse('chunk uploaded')
 
     def get(self, request, *args, **kwargs):
-        r = ResumableFile(self.model_upload_field, request.GET)
+        r = ResumableFile(self.model_upload_field, user=request.user, params=request.GET)
         if not r.chunk_exists:
             return HttpResponse('chunk not found', status=404)
         if r.is_complete:
@@ -36,4 +36,4 @@ class UploadView(View):
         return HttpResponse('chunk exists')
 
 
-admin_resumable = staff_member_required(UploadView.as_view())
+admin_resumable = login_required(UploadView.as_view())
