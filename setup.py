@@ -8,12 +8,13 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-admin-resumable-js',
-    version='2.1.0',
+    version='2.1.1',
     packages=['admin_resumable'],
     include_package_data=True,
     package_data={
         'admin_resumable': [
-            'templates/admin_resumable/file_input.html',
+            'templates/admin_resumable/admin_file_input.html',
+            'templates/admin_resumable/user_file_input.html',
             'static/admin_resumable/js/resumable.js',
         ]
     },
