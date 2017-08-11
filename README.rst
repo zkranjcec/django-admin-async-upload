@@ -69,6 +69,7 @@ Versions
 
 2.1.0: Version update as not backward compatible changes were introduced.
 
+2.1.1: Fixed setup.py package data.
 
 [1] Django silently truncates incomplete chunks, due to the way the multipart
 parser works: https://github.com/django/django/blob/master/django/http/multipartparser.py
