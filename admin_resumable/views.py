@@ -24,7 +24,8 @@ class UploadView(View):
         if not r.chunk_exists:
             r.process_chunk(chunk)
         if r.is_complete:
-            return HttpResponse(r.collect())
+            completed = r.post_complete()
+            return HttpResponse(completed)
         return HttpResponse('chunk uploaded')
 
     def get(self, request, *args, **kwargs):
@@ -32,7 +33,8 @@ class UploadView(View):
         if not r.chunk_exists:
             return HttpResponse('chunk not found', status=404)
         if r.is_complete:
-            return HttpResponse(r.collect())
+            completed = r.get_complete()
+            return HttpResponse(completed)
         return HttpResponse('chunk exists')
 
 

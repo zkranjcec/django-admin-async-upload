@@ -2,6 +2,9 @@
 import fnmatch
 import tempfile
 
+from django.utils.module_loading import import_string
+
+from django.conf import settings
 from django.core.files import File
 from django.utils.functional import cached_property
 
@@ -42,8 +45,16 @@ class ResumableFile(object):
         return self.resumable_storage.full_filename(self.filename, self.upload_to)
 
     @property
+    def chunk_filename(self):
+        return self.chunk_storage.full_filename(self.filename, self.upload_to)
+
+    @property
     def upload_to(self):
         return self.field.upload_to
+
+    @property
+    def upload_to_chunk(self):
+        return self.field.upload_to_chunk if self.field.upload_to_chunk else self.field.upload_to
 
     @property
     def chunk_exists(self):
@@ -142,3 +153,21 @@ class ResumableFile(object):
         actual_filename = self.persistent_storage.save(self.storage_filename, File(self.file))
         self.delete_chunks()
         return actual_filename
+
+    def post_complete(self):
+        """
+        Action called when responding to HTTP POST request if chunk upload is already complete.
+        """
+        post_complete_callback = getattr(settings, "ADMIN_RESUMABLE_UPLOAD_POST_COMPLETE", None)
+        if post_complete_callback:
+            return import_string(post_complete_callback)(self)
+        return self.collect()
+
+    def get_complete(self):
+        """
+        Action called when responding to HTTP GET request if chunk upload is already complete.
+        """
+        get_complete_callback = getattr(settings, "ADMIN_RESUMABLE_UPLOAD_GET_COMPLETE", None)
+        if get_complete_callback:
+            return import_string(get_complete_callback)(self)
+        return self.collect()
