@@ -18,13 +18,13 @@ Installation
 * pip install django-admin-resumable-js
 * Add ``admin_resumable`` to your ``INSTALLED_APPS``
 * Add ``url(r'^admin_resumable/', include('admin_resumable.urls')),`` to your urls.py
-* Add a model field eg: ``from admin_resumable.fields import ModelAdminResumableFileField``
+* Add a model field eg: ``from admin_resumable.models import ResumableFileField``
 
 ::
 
     class Foo(models.Model):
         bar = models.CharField(max_length=200)
-        foo = ModelAdminResumableFileField()
+        foo = ResumableFileField()
 
 
 
