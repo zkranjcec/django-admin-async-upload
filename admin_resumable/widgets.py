@@ -30,6 +30,7 @@ class ResumableBaseWidget(FileInput):
 
         chunk_size = getattr(settings, 'ADMIN_RESUMABLE_CHUNKSIZE', "1*1024*1024")
         show_thumb = getattr(settings, 'ADMIN_RESUMABLE_SHOW_THUMB', False)
+        simultaneous_uploads = getattr(settings, 'ADMIN_SIMULTANEOUS_UPLOADS', 3)
 
         content_type_id = ContentType.objects.get_for_model(self.attrs['model']).id
 
@@ -43,6 +44,7 @@ class ResumableBaseWidget(FileInput):
             'content_type_id': content_type_id,
             'file_url': file_url,
             'file_name': file_name,
+            'simultaneous_uploads': simultaneous_uploads,
         }
 
         if not self.is_required:
