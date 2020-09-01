@@ -10,7 +10,7 @@ Fork Goals
 ----------
 
 - provide compatibility with django-storages, especially s3 storage
-- add full support for inlines (original version works well with editing existing admin inlines, but failes when new ones are added)
+- add full support for inlines (original version works well with editing existing admin inlines, but fails when new ones are added)
 
 Screenshot
 ----------
