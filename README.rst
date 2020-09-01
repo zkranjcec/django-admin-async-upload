@@ -96,6 +96,12 @@ python 3.2 and 3.3 supported up to django 1.8.
 Thanks to
 ---------
 
+original django-admin-resumable-js by jonatron https://github.com/jonatron/django-admin-resumable-js
+
+django-admin-resumable-js fork by roxel https://github.com/roxel/django-admin-resumable-js
+
 Resumable.js https://github.com/23/resumable.js
 
 django-resumable https://github.com/jeanphix/django-resumable
+
+
