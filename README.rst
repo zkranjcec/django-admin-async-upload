@@ -6,6 +6,12 @@ django-admin-resumable-js
 
 django-admin-resumable-js is a django app to allow you to upload large files from within the django admin site.
 
+Fork Goals
+----------
+
+- provide compatibility with django-storages, especially s3 storage
+- add full support for inlines (original version works well with editing existing admin inlines, but failes when new ones are added)
+
 Screenshot
 ----------
 
