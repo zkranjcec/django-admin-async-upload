@@ -36,18 +36,27 @@ if (typeof djangoAdminResumableFieldListenerSetUp=="undefined")
         r.assignBrowse($('#' + elementId + '_input_file'));
         r.on('fileAdded', function(file) {
             r.upload();
+            $("#" + elementId + "_uploaded_status").html(file.fileName + ' ⏳ Uploading... ');
+            {#console.log(file)#}
             $("form").addClass("{{ name }}_disabled");
         });
         r.on('fileSuccess', function(file, message) {
             $('#'+elementId).val(message);
-            $("#" + elementId + "_uploaded_status").html(message + ' Uploaded');
+            $("#" + elementId + "_uploaded_status").html(message + ' ✅ Uploaded');
             $("form").removeClass("{{ name }}_disabled");
         });
         r.on('fileError', function(file, message) {
             $("#" + elementId + "_uploaded_status").html(message);
         });
         r.on('progress', function(file, message) {
-            $('#' + elementId + '_progress').val(r.progress());
+            let progress = r.progress();
+            if(progress==0)
+            {
+                //don't show 0 if there is any progress but server does not report actual progress
+                //show something at least so user won't be confused
+                progress=0.05;
+            }
+            $('#' + elementId + '_progress').val(progress);
         });
 
     }
