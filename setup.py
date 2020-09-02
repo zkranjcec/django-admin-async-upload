@@ -7,14 +7,14 @@ README = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name='django-admin-resumable-js',
-    version='2.1.1',
-    packages=['admin_resumable'],
+    name='django-admin-async-upload',
+    version='3.0.0',
+    packages=['admin_async_upload'],
     include_package_data=True,
     package_data={
-        'admin_resumable': [
-            'templates/admin_resumable/admin_file_input.html',
-            'templates/admin_resumable/user_file_input.html',
+        'admin_async_upload': [
+            'templates/admin_async_upload/admin_file_input.html',
+            'templates/admin_async_upload/user_file_input.html',
             'static/admin_resumable/js/resumable.js',
         ]
     },
