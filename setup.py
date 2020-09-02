@@ -8,13 +8,13 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-admin-async-upload',
-    version='3.0.0',
+    version='3.0.1',
     packages=['admin_async_upload'],
     include_package_data=True,
     package_data={
         'admin_async_upload': [
-            'templates/admin_async_upload/admin_file_input.html',
-            'templates/admin_async_upload/user_file_input.html',
+            'templates/admin_resumable/admin_file_input.html',
+            'templates/admin_resumable/user_file_input.html',
             'static/admin_resumable/js/resumable.js',
         ]
     },
