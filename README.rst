@@ -1,10 +1,12 @@
-django-admin-resumable-js
-=========================
+django-admin-async-upload
+===============================
 
 .. image:: https://api.travis-ci.org/jonatron/django-admin-resumable-js.svg?branch=master
    :target: https://travis-ci.org/jonatron/django-admin-resumable-js
 
-django-admin-resumable-js is a django app to allow you to upload large files from within the django admin site asynchrously, that means that you can add any number of files on the admin page (e.g. through inline models) and continue editing other fields while files are uploading.
+django-admin-async-upload is a django app to allow you to upload large files from within the django admin site asynchrously (using ajax), that means that you can add any number of files on the admin page (e.g. through inline models) and continue editing other fields while files are uploading.
+
+django-admin-async-file-uploads is compatible with django-storages (tested with 
 
 Fork Goals
 ----------
@@ -21,16 +23,16 @@ Screenshot
 Installation
 ------------
 
-* pip install django-admin-resumable-js
-* Add ``admin_resumable`` to your ``INSTALLED_APPS``
-* Add ``url(r'^admin_resumable/', include('admin_resumable.urls')),`` to your urls.py
+* pip install django-admin-async-upload
+* Add ``admin_async_upload`` to your ``INSTALLED_APPS``
+* Add ``url(r'^admin_async_upload/', include('admin_async_upload.urls')),`` to your urls.py
 * Add a model field eg: ``from admin_resumable.models import ResumableFileField``
 
 ::
 
     class Foo(models.Model):
         bar = models.CharField(max_length=200)
-        foo = ResumableFileField()
+        foo = AsyncFileField()
 
 
 
@@ -42,64 +44,25 @@ Optionally:
 * Set ``ADMIN_RESUMABLE_SHOW_THUMB``, default is False. Shows a thumbnail next to the "Currently:" link.
 * Set ``ADMIN_SIMULTANEOUS_UPLOADS`` to limit number of simulteneous uploads, dedaults to `3`. If you have broken pipe issues in local development environment, set this value to `1`.
 
-South
------
-
-If you use South for migration, then put this at the top of your models.py file to help South introspect your ``ModelAdminResumableFileField``:
-
-::
-
-    from south.modelsinspector import add_introspection_rules
-
-    add_introspection_rules([], [
-        r'^admin_resumable\.fields\.ModelAdminResumableFileField'])
-
 
 Versions
 --------
 
-1.0: First PyPI release
 
-1.1: Bug fix [1]
 
-1.2: Django 1.9 Compatibility
-
-2.0: Added upload_to
-
-2.0.1: Upload with two different storages for chunks and persistent storage
-
-2.0.2: Widget render fix
-
-2.0.3: Version fix
-
-2.0.4: Added validator. File reorganization.
-
-2.1.0: Version update as not backward compatible changes were introduced.
-
-2.1.1: Fixed setup.py package data.
-
-[1] Django silently truncates incomplete chunks, due to the way the multipart
-parser works: https://github.com/django/django/blob/master/django/http/multipartparser.py
-This could result in a file being unable to be uploaded, or a corrupt file,
-depending on the situation.
 
 
 Compatibility
 -------------
 
-1.2:
-{py27,py32,py33,py34,py35}-django{1.6,1.7,1.8,1.9}.
-python 3.2 and 3.3 supported up to django 1.8.
-
-2.0:
-{py27,py34,py35}-django{1.8,1.9,1.10,1.11}
+Tested on Django 2.2 running on python 3.6 and 3.7
 
 Thanks to
 ---------
 
-original django-admin-resumable-js by jonatron https://github.com/jonatron/django-admin-resumable-js
+original django-admin-resumable-js by jonatron https://github.com/jonatron/django-admin-resumable-js 
 
-django-admin-resumable-js fork by roxel https://github.com/roxel/django-admin-resumable-js
+django-admin-resumable-js fork by roxel https://github.com/roxel/django-admin-resumable-js (django-admin-async-upload is based on this fork 
 
 Resumable.js https://github.com/23/resumable.js
 
