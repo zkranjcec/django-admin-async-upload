@@ -6,16 +6,13 @@ django-admin-async-upload
 
 django-admin-async-upload is a django app to allow you to upload large files from within the django admin site asynchrously (using ajax), that means that you can add any number of files on the admin page (e.g. through inline models) and continue editing other fields while files are uploading.
 
-django-admin-async-file-uploads is compatible with django-storages (tested with 
+django-admin-async-file-uploads is compatible with django-storages (tested with S3Storage)
 
-Fork Goals
-----------
-
-- provide compatibility with django-storages, especially s3 storage (seems to work at the moment)
-- add full support for inlines (original version works well with editing existing admin inlines, but fails when new ones are added) - seems to work now, needs more testing
 
 Screenshot
 ----------
+
+#TODO: update this screenshot
 
 .. image:: https://github.com/jonatron/django-admin-resumable-js/raw/master/screenshot.png?raw=true
 
