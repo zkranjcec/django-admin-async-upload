@@ -5,7 +5,7 @@ from django.conf import settings
 
 
 urlpatterns = [
-    url(r'^admin_resumable/', include('admin_resumable.urls')),
+    url(r'^admin_resumable/', include('admin_async_upload.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]
 

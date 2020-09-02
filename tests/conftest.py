@@ -80,7 +80,7 @@ def pytest_configure():
             'django.contrib.messages',
             'django.contrib.staticfiles',
 
-            'admin_resumable',
+            'admin_async_upload',
             'tests',
         ),
         PASSWORD_HASHERS=(
