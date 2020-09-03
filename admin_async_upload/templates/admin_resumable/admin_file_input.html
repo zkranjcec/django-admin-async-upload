@@ -15,7 +15,8 @@ if (typeof djangoAdminResumableFieldListenerSetUp=="undefined")
         console.log('setting up '+ elementId);
 
         $('form').submit(function() {
-            if($(this).hasClass('{{ name }}_disabled')) {
+            if($(this).hasClass(elementId + '_disabled')) {
+                alert("File upload is still in progress.")  //FIXME: fires several alerts for each file
                 return false;
             }
         });
@@ -38,12 +39,13 @@ if (typeof djangoAdminResumableFieldListenerSetUp=="undefined")
             r.upload();
             $("#" + elementId + "_uploaded_status").html(file.fileName + ' ⏳ Uploading... ');
             {#console.log(file)#}
-            $("form").addClass("{{ name }}_disabled");
+            $("form").addClass(elementId + "_disabled");
         });
         r.on('fileSuccess', function(file, message) {
             $('#'+elementId).val(message);
             $("#" + elementId + "_uploaded_status").html(message + ' ✅ Uploaded');
-            $("form").removeClass("{{ name }}_disabled");
+            $("form").removeClass(elementId + "_disabled");
+            console.log("fileSuccess fired " + file + " " + message)
         });
         r.on('fileError', function(file, message) {
             $("#" + elementId + "_uploaded_status").html(message);
