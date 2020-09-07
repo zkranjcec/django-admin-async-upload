@@ -42,10 +42,27 @@ if (typeof djangoAdminResumableFieldListenerSetUp=="undefined")
             $("form").addClass(elementId + "_disabled");
         });
         r.on('fileSuccess', function(file, message) {
-            $('#'+elementId).val(message);
-            $("#" + elementId + "_uploaded_status").html(message + ' ✅ Uploaded');
+
+            ///check that the name of the file is returned and not "chunk uploaded"
+            if(message.toLowerCase().includes("chunk uploaded"))
+            {
+                //this means some upload error occured - that happens occasionaly (not sure why yet)
+                //in this case the file was actually not fully uploaded and saving the form
+                //will fail
+                //TODO: fix this case properly. I cannot find a patter to reproduce it
+
+                //set value to null, so the form won;t try to save the file
+                $('#'+elementId).val("");
+                $("#" + elementId + "_uploaded_status").html(message + ' ❌ Error while uploading - please re-upload this file');
+            }
+            else {
+                $('#'+elementId).val(message);
+                $("#" + elementId + "_uploaded_status").html(message + ' ✅ Uploaded');
+            }
+            // console.log("fileSuccess fired " + file + " " + message)
+
             $("form").removeClass(elementId + "_disabled");
-            console.log("fileSuccess fired " + file + " " + message)
+
         });
         r.on('fileError', function(file, message) {
             $("#" + elementId + "_uploaded_status").html(message);
