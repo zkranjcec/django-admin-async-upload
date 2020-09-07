@@ -8,7 +8,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-admin-async-upload',
-    version='3.0.3',
+    version='3.0.4',
     packages=['admin_async_upload'],
     include_package_data=True,
     package_data={
@@ -22,8 +22,8 @@ setup(
     description='A Django app for the uploading of large files from the django admin site.',
     long_description=README,
     url='https://github.com/jonatron/django-admin-resumable-js',
-    author='Jonatron',
-    author_email='jon4tron@gmail.com',
+    author='Alexey "DataGreed" Strelkov',
+    author_email='datagreed@gmail.com',
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
