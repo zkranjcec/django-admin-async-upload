@@ -22,8 +22,9 @@ Installation
 
 * pip install django-admin-async-upload
 * Add ``admin_async_upload`` to your ``INSTALLED_APPS``
-* Add ``url(r'^admin_async_upload/', include('admin_async_upload.urls')),`` to your urls.py
-* Add a model field eg: ``from admin_resumable.models import ResumableFileField``
+* Add ``from django.urls import path, include, re_path`` to your urls.py
+* Add ``re_path(r'^admin_async_upload/', include('admin_async_upload.urls')),`` to your urls.py
+* Add a model field eg: ``from admin_async_upload.models import AsyncFileField``
 
 ::
 
@@ -53,6 +54,7 @@ Compatibility
 -------------
 
 Tested on Django 2.2 running on python 3.6 and 3.7
+Updated for Django 4
 
 Thanks to
 ---------
